@@ -51,6 +51,12 @@ name = "pypi_tutorial"
 
 ```
 
+Contents of `myprog.py`:
+
+```python
+
+```
+
 2. Navigate to the top level directory and create a new python virtual environment:
 
 `$ python -m venv venv` 
@@ -69,7 +75,7 @@ name = "pypi_tutorial"
 1. https://packaging.python.org/tutorials/packaging-projects/
 2. https://chriswarrick.com/blog/2014/09/15/python-apps-the-right-way-entry_points-and-scripts/
 3. https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/
-
+4. http://python-packaging.readthedocs.io/en/latest/command-line-scripts.html
 
 
 

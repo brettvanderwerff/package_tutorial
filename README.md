@@ -3,6 +3,11 @@
 
 Note: All steps of this tutorial were performed on a completely fresh install of Linux Ubuntu 18.04.1 LTS, commands will vary slightly by OS and environment.
 
+### What is a Python package?
+
+### What is the Python Package Index? 
+
+
 
 1. Open a terminal and clone the tutorial repository.
 
@@ -54,7 +59,7 @@ setuptools.setup(
     author_email="brett.vanderwerff@gmail.com",
     description="A small example package",
     url="https://github.com/cougpy/pypi_tutorial",
-    packages=setuptools.find_packages(),
+    packages=["pypi_tutorial"],
     install_requires=[
        'numpy'
     ],
@@ -68,14 +73,43 @@ setuptools.setup(
 )
 
 ```
+
+There is a lot going on in `setup.py`, bet we can look at it piece by piece.
+
+First we import setuptools, which is a part of the Python standard library that facilitates the generation of Python packages for distribution.
+
+setuptools has a setup method that runs the setup. 
+
+To the setup method we pass the following arguments: 
+
+* name: The name of our package :)
+* version: Attempts have been made to standardize version schemes, its pretty complicated you can read more about that here: https://www.python.org/dev/peps/pep-0440/
+* author: Your name if you made the package
+* author_email: Your email if you made the package
+* Description: Just a short blurb about what the package does
+* url: A url for the source code repository, these days this is almost always a repo hosted on Github
+* pacakes: This is a list of our local packages we would like included in the distribution package. In our case this is just a list containing our one package: 'pypi_tutorial', but if there were subpackages under 'pypi_tutorial' that we wanted to distribute as well, we would also add them to this list."
+
+Keep in mind that most of these arguments are just metadata that show up on the PyPI page that hosts your project.
+
+
+
 classifiers: https://pypi.org/pypi?%3Aaction=list_classifiers
 
-Contents of `__init__.py`
+Contents of `__init__.py`:
 
-```python
-name = "pypi_tutorial"
+`__init__.py` is actually just an empty file. Its really important though, placing `__init__.py` in the pypi_tutorial makes Python recognize that directory as a package, which can then be imported by Python as if it was a .py file like so:
+ 
+ `import pypi_tutorial` 
+ 
+ We could also import any submodules contained within the pypi_tutorial package like so:
+ 
+ `from pypi_tutorial import my_prog`
+ 
+ I don't think we get much benefit out of packaging our little program here, but organizing code into packages (and subpackages) becomes a very powerful way to separate out functional components of a larger code base and even some not so large code bases.
+ 
 
-```
+
 
 Contents of `myprog.py`:
 

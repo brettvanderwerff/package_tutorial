@@ -1,20 +1,46 @@
 # pypi_tutorial
 (WIP) A tutorial for packaging projects for the Python Package Index (PyPI)
 
-Note: All steps of this tutorial were performed on a fresh install of Linux Ubuntu 18.04, commands will vary slightly by OS and environment.
+Note: All steps of this tutorial were performed on a completely fresh install of Linux Ubuntu 18.04.1 LTS, commands will vary slightly by OS and environment.
 
 
-1. Clone repository
+1. Open a terminal and clone the tutorial repository.
+
+```commandline
+$sudo apt install git \
+git clone https://github.com/brettvanderwerff/pypi_tutorial
+
+```
+
+2. Change directory into the pypi_tutorial folder
+
+```commandline
+$cd pypi_tutorial
+```
+
+3. Make a python virtual environment
+
+```commandline
+$sudo apt-get install python3-venv \
+python3 -m venv venv
+
+```
+
+
+This command runs the Python package venv to create a virtual environment 'venv'. This virtual environment is a fresh install of the Python interpreter. This prevents us from having dependency conflicts with the system-wide Python interpreter. I think its good practice to develop each of your projects with thier own virtual environment. Later we will be activating this virtual environment.
+
 
 Project Structure:
 
 ```
-pypi_tutorial
-├──pypi_tutorial     
+pypi_tutorial/
+├──pypi_tutorial/     
 │   ├── __init__.py        
 │   └── my_prog.py 
 └── setup.py  
 ```
+
+4. Have a look at all the 
 
 Contents of `setup.py`:
 

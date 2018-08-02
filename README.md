@@ -76,7 +76,7 @@ setuptools.setup(
 
 There is a lot going on in `setup.py`, bet we can look at it piece by piece.
 
-First we import setuptools, which is a part of the Python standard library that facilitates the generation of Python packages for distribution.
+First we import setuptools, which is a part of the Python standard library (as far as I know) that facilitates the generation of Python packages for distribution.
 
 setuptools has a setup method that runs the setup. 
 

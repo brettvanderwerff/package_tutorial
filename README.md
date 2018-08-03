@@ -52,14 +52,16 @@ Contents of `setup.py`:
 ```python
 import setuptools
 
+
 setuptools.setup(
-    name="pypi_tutorial",
+    name="package_tutorial",
     version="0.0.1",
     author="Brett Vanderwerff",
     author_email="brett.vanderwerff@gmail.com",
     description="A small example package",
-    url="https://github.com/cougpy/pypi_tutorial",
-    packages=["pypi_tutorial"],
+    long_description='A small example package to demonstrate uploading packages to PyPI for distribution.',
+    url="https://github.com/brettvanderwerff/package_tutorial",
+    packages=['package_tutorial', 'package_tutorial.get_average', 'package_tutorial.get_sum'],
     install_requires=[
        'numpy'
     ],
@@ -67,11 +69,10 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 2",
         "Natural Language :: English",
-        "License :: OSI Approved :: MIT License",
+        "License :: unlicense",
         "Operating System :: OS Independent",
     ),
 )
-
 ```
 
 There is a lot going on in `setup.py`, bet we can look at it piece by piece.
@@ -86,9 +87,11 @@ To the setup method we pass the following arguments:
 * version: Attempts have been made to standardize version schemes, its pretty complicated you can read more about that here: https://www.python.org/dev/peps/pep-0440/
 * author: Your name if you made the package
 * author_email: Your email if you made the package
-* Description: Just a short blurb about what the package does
+* Description: Just a short blurb about what the package does.
 * url: A url for the source code repository, these days this is almost always a repo hosted on Github
-* pacakes: This is a list of our local packages we would like included in the distribution package. In our case this is just a list containing our one package: 'pypi_tutorial', but if there were subpackages under 'pypi_tutorial' that we wanted to distribute as well, we would also add them to this list."
+* packages: This is a list of our local packages we would like included in the distribution package. In our case this is just a list containing all the folders we have containing an `__init__.py` file. If any packages contained development tools we didn't want to distribute, we could have just excluded them from the list. You can also set `packages=find_packages()` here, which will walk the project directory and return a list of all folders containing an `__init__.py` file.
+* install_requires: This is a list of dependencies. When setup.py runs, an attempt will be made to install these dependencies in your environment. 
+* classifiers: Classifiers will end up being tags on PyPI that will help people search for your project.
 
 Keep in mind that most of these arguments are just metadata that show up on the PyPI page that hosts your project.
 
@@ -114,6 +117,13 @@ Contents of `__init__.py`:
 Contents of `myprog.py`:
 
 ```python
+
+from package_tutorial.get_average import get_average
+from package_tutorial.get_sum import get_sum
+
+def my_prog(input_list):
+    get_average.run(input_list=input_list)
+    get_sum.run(input_list=input_list)
 
 ```
 

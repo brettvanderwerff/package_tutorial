@@ -38,12 +38,26 @@ This command runs the Python package venv to create a virtual environment 'venv'
 Project Structure:
 
 ```
-pypi_tutorial/
-├──pypi_tutorial/     
-│   ├── __init__.py        
+package_tutorial
+│
+├──package_tutorial     
+│   ├── __init__.py   
+│   │    
+│   ├──get_average
+│   │   ├──__init__.py
+│   │   └──get_average.py
+│   │
+│   ├──get_sum
+│   │   ├──__init__.py
+│   │   └──get_sum.py
+│   │
 │   └── my_prog.py 
+│
 └── setup.py  
 ```
+
+Its important to note that we have 3 packages here: the top level package_tutorial along with get_average and get_sum. Packages are identified as folders that contain an `__init__.py` file. 
+
 
 4. Have a look at all the 
 

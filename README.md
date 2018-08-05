@@ -186,10 +186,15 @@ That it for showing the project structure and contents, lets move on to uploadin
 
 4. Install setuptools and twine
 
-`$pip install -U twine, setuptools`
+`$pip install -U setuptools`
 
-This command installs the python packages twine and setuptools to our virtual environment. The U flag indicates that these packages will be upgraded to the most recent versions if they are already installed but outdated. 
+This command installs the python packages setuptools to our virtual environment. The U flag indicates that these packages will be upgraded to the most recent versions if they are already installed but outdated. 
 
+5. Run the setup.py script to create the distribution of our package. 
+
+`$python setup.py bdist`
+
+This command creates a folder `dist/` in our top level directory. A gzipped file including our package and some meta-data is writen in this `dist` folder. 
 
 search : Minimally, you should create a Source Distribution in  https://packaging.python.org/guides/distributing-packages-using-setuptools/
 

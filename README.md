@@ -1,12 +1,25 @@
 # pypi_tutorial
 (WIP) A tutorial for packaging projects for the Python Package Index (PyPI)
 
-Note: All steps of this tutorial were performed on a completely fresh install of Linux Ubuntu 18.04.1 LTS, commands will vary slightly by OS and environment.
 
 ### What is a Python package?
 
+On one level Python packages can be thought of as folders that can be imported into Python similar to to how modules can be imported. Packages usually contain a collection of related submodules that are visible to Python upon importing the package. 
+
+### Why should I care about packaging my projects?
+
+Organizing code into packages (and subpackages) becomes a very powerful way to separate out functional components of a larger code base and even some not so large code bases. In my experience it makes the code base easier to maintain as the project develops and it can make the project easier to share with use of the Python Package Index, as we will see with this demonstration.
+
 ### What is the Python Package Index? 
 
+To me a large part of what makes Python so great is the community and the vast amount of open-source tools that have been developed by the community. When individuals develop tools in Python, it is common for those individuals to structure their tools as packages and distribute them to other Python users via the Python Package Index (PyPI, https://pypi.org/), a large online repository for Python packages. Anyone who wants to pull a package from PyPI to use on their personal machine can do so easily with the Python package management system "pip". At the time of writing this, there are 148,000 packages on PyPI.
+
+### What are we going to learn here today?
+
+We are going to learn a bit about how to package your project and upload it to PyPI. 
+
+
+##### Note: All steps of this demonstration were performed on a completely fresh install of Linux Ubuntu 18.04.1 LTS, commands will vary slightly by OS and environment (but not much).
 
 
 1. Open a terminal and clone the tutorial repository.
@@ -101,32 +114,29 @@ To the setup method we pass the following arguments:
 * version: Attempts have been made to standardize version schemes, its pretty complicated you can read more about that here: https://www.python.org/dev/peps/pep-0440/
 * author: Your name if you made the package
 * author_email: Your email if you made the package
-* Description: Just a short blurb about what the package does.
-* url: A url for the source code repository, these days this is almost always a repo hosted on Github
+* description: Just a short blurb about what the package does. People will see this description alongside your project name when looking through PyPI search results. 
+* long description: A long blurb about what the project does, usually people set this argument equal to a string representing their entire README file.
+* url: A url for the source code repository, these days this is almost always a repo hosted on Github.
 * packages: This is a list of our local packages we would like included in the distribution package. In our case this is just a list containing all the folders we have containing an `__init__.py` file. If any packages contained development tools we didn't want to distribute, we could have just excluded them from the list. You can also set `packages=find_packages()` here, which will walk the project directory and return a list of all folders containing an `__init__.py` file.
 * install_requires: This is a list of dependencies. When setup.py runs, an attempt will be made to install these dependencies in your environment. 
 * classifiers: Classifiers will end up being tags on PyPI that will help people search for your project.
 
-Keep in mind that most of these arguments are just metadata that show up on the PyPI page that hosts your project.
-
-
-
-classifiers: https://pypi.org/pypi?%3Aaction=list_classifiers
+Keep in mind that most of these arguments are just metadata that show up on the PyPI page that hosts your project. Here is more info on classifiers: https://pypi.org/pypi?%3Aaction=list_classifiers
 
 Contents of `__init__.py`:
 
-`__init__.py` is actually just an empty file. Its really important though, placing `__init__.py` in the pypi_tutorial makes Python recognize that directory as a package, which can then be imported by Python as if it was a .py file like so:
- 
- `import pypi_tutorial` 
- 
- We could also import any submodules contained within the pypi_tutorial package like so:
- 
- `from pypi_tutorial import my_prog`
- 
- I don't think we get much benefit out of packaging our little program here, but organizing code into packages (and subpackages) becomes a very powerful way to separate out functional components of a larger code base and even some not so large code bases.
- 
+```python
 
+```
 
+`__init__.py` every `__init__.py` file in our project is actually just an empty file. Its really important though, placing `__init__.py` in the package_tutorial folder makes Python recognize that directory as a package, which can then be imported by Python as if it was a .py file like so:
+ 
+ `import package_tutorial` 
+ 
+ We could also import any submodules contained within the package_tutorial package like so:
+ 
+ `from package_tutorial import my_prog`
+ 
 
 Contents of `myprog.py`:
 
@@ -141,6 +151,31 @@ def my_prog(input_list):
 
 ```
 
+Contents of `get_average.py`:
+
+```python
+import numpy as np
+
+def run(input_list):
+    print("The average of list items is: " + str(np.average(input_list)))
+
+```
+This is just a function that prints the average of a list of items.
+
+Contents of `get_sum.py`:
+
+```python
+import numpy as np
+
+def run(input_list):
+    print("The sum of list items is: " + str(np.sum(input_list)))
+
+```
+This is just a function that prints the sum of a list of items. 
+
+That it for showing the project structure and contents, lets move on to uploading this package to PyPI.
+
+
 2. Navigate to the top level directory and create a new python virtual environment:
 
 `$ python -m venv venv` 
@@ -152,6 +187,8 @@ def my_prog(input_list):
 4. Install wheel and twine
 
 `$pip install wheel, twine`
+
+
 
 
 #### References

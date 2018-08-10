@@ -4,7 +4,7 @@
 
 ### What is a Python package?
 
-On one level Python packages can be thought of as folders that can be imported into Python similar to to how modules can be imported. Packages usually contain a collection of related submodules that are visible to Python upon importing the package. 
+On one level Python packages can be thought of as folders that can be imported into Python similar to to how modules can be imported. Packages usually contain a collection of related modules that are visible to Python upon importing the package. 
 
 ### Why should I care about packaging my projects?
 
@@ -18,6 +18,7 @@ To me a large part of what makes Python so great is the community and the vast a
 
 We are going to learn a bit about how to package your project and upload it to PyPI. 
 
+### Lets get started!
 
 ##### Note: All steps of this demonstration were performed on a completely fresh install of Linux Ubuntu 18.04.1 LTS, commands will vary slightly by OS and environment (but not much).
 
@@ -39,13 +40,13 @@ $cd pypi_tutorial
 3. Make a python virtual environment
 
 ```commandline
-$sudo apt-get install python3-venv \
-python3 -m venv venv
+$sudo apt-get install python-venv \
+python -m venv venv
 
 ```
 
 
-This command runs the Python package venv to create a virtual environment 'venv'. This virtual environment is a fresh install of the Python interpreter. This prevents us from having dependency conflicts with the system-wide Python interpreter. I think its good practice to develop each of your projects with thier own virtual environment. Later we will be activating this virtual environment.
+This command runs the Python package venv to create a virtual environment 'venv'. This virtual environment is a fresh install of the Python interpreter. This prevents us from having dependency conflicts with the system-wide Python interpreter. It really depends on what you are doing, but in some cases it is good practice to develop each of your projects with thier own virtual environment. Later we will be activating this virtual environment.
 
 
 Project Structure:
@@ -102,7 +103,7 @@ setuptools.setup(
 )
 ```
 
-There is a lot going on in `setup.py`, bet we can look at it piece by piece.
+There is a lot going on in `setup.py`, but we can look at it piece by piece.
 
 First we import setuptools, which is a part of the Python standard library (as far as I know) that facilitates the generation of Python packages for distribution.
 
@@ -129,14 +130,35 @@ Contents of `__init__.py`:
 
 ```
 
-`__init__.py` every `__init__.py` file in our project is actually just an empty file. Its really important though, placing `__init__.py` in the package_tutorial folder makes Python recognize that directory as a package, which can then be imported by Python as if it was a .py file like so:
+Actually every `__init__.py` file in our project is just an empty file. Its really important though, placing `__init__.py` in the package_tutorial folder makes Python recognize that directory as a package, which can then be imported by Python as if it was a .py file like so:
  
  `import package_tutorial` 
  
- We could also import any submodules contained within the package_tutorial package like so:
+ We could also import any modules contained within the package_tutorial package like so:
  
  `from package_tutorial import my_prog`
- 
+
+Contents of `get_average.py`:
+
+```python
+import numpy as np
+
+def run(input_list):
+    print("The average of list items is: " + str(np.average(input_list)))
+
+```
+`get_average.py` contains a function that prints the average of a list of items.
+
+Contents of `get_sum.py`:
+
+```python
+import numpy as np
+
+def run(input_list):
+    print("The sum of list items is: " + str(np.sum(input_list)))
+
+```
+`get_sum.py` contains a function that prints the sum of a list of items.  
 
 Contents of `myprog.py`:
 
@@ -150,53 +172,66 @@ def my_prog(input_list):
     get_sum.run(input_list=input_list)
 
 ```
+This is just a program that imports 
 
-Contents of `get_average.py`:
-
-```python
-import numpy as np
-
-def run(input_list):
-    print("The average of list items is: " + str(np.average(input_list)))
-
-```
-This is just a function that prints the average of a list of items.
-
-Contents of `get_sum.py`:
-
-```python
-import numpy as np
-
-def run(input_list):
-    print("The sum of list items is: " + str(np.sum(input_list)))
-
-```
-This is just a function that prints the sum of a list of items. 
 
 That it for showing the project structure and contents, lets move on to uploading this package to PyPI.
 
 
 2. Navigate to the top level directory and create a new python virtual environment:
 
-`$ python -m venv venv` 
+```commandline
+$python -m venv venv
+```
+
 
 3. Activate the virtual environment
 
-`$source venv\bin\activate`
+```commandline
+$source venv\bin\activate
+```
 
-4. Install setuptools and twine
 
-`$pip install -U setuptools`
+
+4. Make sure setuptools is installed 
+
+```commandline
+$pip install -U setuptools
+
+```
 
 This command installs the python packages setuptools to our virtual environment. The U flag indicates that these packages will be upgraded to the most recent versions if they are already installed but outdated. 
 
 5. Run the setup.py script to create the distribution of our package. 
 
-`$python setup.py bdist`
+```commandline
+$python setup.py sdist
+```
 
 This command creates a folder `dist/` in our top level directory. A gzipped file including our package and some meta-data is writen in this `dist` folder. 
 
 search : Minimally, you should create a Source Distribution in  https://packaging.python.org/guides/distributing-packages-using-setuptools/
+
+6. Make an account on [TestPyPI](https://test.pypi.org/account/register/). This is a test instance of the real PyPI that lets us test our uploading process without affecting the real PyPI. You should walk away from this registration with a username and password. You will likely also need to verify your email with TestPyPI.
+
+7. Make sure twine is installed
+
+```commandline
+$pip install -U twine
+```
+Twine is a tool for securely interfacing with PyPI/TestPyPI and uploading our package.
+
+8. After installing twine, we will use it to upload our package by using the following command 
+
+```commandline
+$twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+```
+
+This command indicates that everything in the `dist` folder that we generated by running our `setup.py` folder is to be uploaded using the url for TestPyPI
+NOTE: should find out why the trailing legacy is on testpypi.
+
+
 
 #### References
 

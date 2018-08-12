@@ -17,7 +17,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 2",
         "Natural Language :: English",
-        "License :: unlicense",
+        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ),
 )

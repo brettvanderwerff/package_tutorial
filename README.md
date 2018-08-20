@@ -1,4 +1,4 @@
-# pypi_tutorial
+# package_tutorial
 (WIP) A tutorial for packaging projects for the Python Package Index (PyPI)
 
 
@@ -27,14 +27,14 @@ We are going to learn a bit about how to package your project and upload it to P
 
 ```commandline
 $sudo apt install git \
-git clone https://github.com/brettvanderwerff/pypi_tutorial
+git clone https://github.com/brettvanderwerff/package_tutorial
 
 ```
 
 2. Change directory into the pypi_tutorial folder
 
 ```commandline
-$cd pypi_tutorial
+$cd package_tutorial
 ```
 
 3. Make a python virtual environment
@@ -72,8 +72,19 @@ package_tutorial
 
 Its important to note that we have 3 packages here: the top level package_tutorial along with get_average and get_sum. Packages are identified as folders that contain an `__init__.py` file. 
 
+every `__init__.py` file in our project is just an empty file. Its really important though, placing `__init__.py` in the package_tutorial folder makes Python recognize that directory as a package, which can then be imported by Python as if it was a .py file like so:
+ 
+ `import package_tutorial` 
+ 
+ We could also import any modules contained within the package_tutorial package like so:
+ 
+ `from package_tutorial import my_prog`
 
-4. Have a look at all the contents of `setup.py`:
+
+4. Lets have a look at the files in our example project. The program itself does not do anything special, it was just made to demonstrate packaging structure. I also made sure it had a dependency for good measure.
+
+
+Contents of `setup.py`:
 
 ```python
 import setuptools
@@ -103,11 +114,9 @@ setuptools.setup(
 
 There is a lot going on in `setup.py`, but we can look at it piece by piece.
 
-First we import setuptools, which is a part of the Python standard library (as far as I know) that facilitates the generation of Python packages for distribution.
+First we import setuptools, which is a tool that facilitates the generation of Python packages for distribution.
 
-setuptools has a setup method that runs the setup. 
-
-To the setup method we pass the following arguments: 
+setuptools has a setup method that runs the setup. To the setup method we pass the following arguments: 
 
 * name: The name of our package :)
 * version: Attempts have been made to standardize version schemes, often they follows the format "major.minor.micro", more about that here: https://www.python.org/dev/peps/pep-0440/
@@ -120,21 +129,7 @@ To the setup method we pass the following arguments:
 * install_requires: This is a list of dependencies. When setup.py runs, an attempt will be made to install these dependencies in your environment. 
 * classifiers: Classifiers will end up being tags on PyPI that will help people search for your project. Here is more info on classifiers: https://pypi.org/pypi?%3Aaction=list_classifiers
 
-Keep in mind that most of these arguments are just metadata that show up on the PyPI page that hosts your project. 
-
-Contents of `__init__.py`:
-
-```python
-
-```
-
-Actually every `__init__.py` file in our project is just an empty file. Its really important though, placing `__init__.py` in the package_tutorial folder makes Python recognize that directory as a package, which can then be imported by Python as if it was a .py file like so:
- 
- `import package_tutorial` 
- 
- We could also import any modules contained within the package_tutorial package like so:
- 
- `from package_tutorial import my_prog`
+Keep in mind that most of these arguments are just metadata that show up on the PyPI page that hosts your project and help PyPI users search for your project.  
 
 Contents of `get_average.py`:
 
@@ -258,7 +253,7 @@ Great, looks like everything works. Lets upload this to the real PyPI.
 ```commandline
 $twine upload dist/*
 ```
-Thats all there is to it. PyPI increases the accessibility of your tool to others greatly. If there is ever a need to use your tool in the future you, or anyone else, can just run `pip install package_tutorial` (or whatever the name of your package is) in an environment with pip installed to collect the project from PyPI. 
+Thats all there is to it. In summary PyPI increases the accessibility of your tool to others greatly. If there is ever a need to use your tool in the future you, or anyone else, can just run `pip install package_tutorial` (or whatever the name of your package is) in an environment with pip installed to collect the project from PyPI. 
 
 #### References
 
